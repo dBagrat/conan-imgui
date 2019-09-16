@@ -3,7 +3,7 @@ from conans import ConanFile, CMake, tools
 
 class IMGUIConan(ConanFile):
     name = "imgui"
-    version = "1.72b"
+    version = "1.72b.1"
     license = "MIT"
     url = "https://github.com/dbagrat/conan-imgui"
     homepage = "https://github.com/ocornut/imgui"
@@ -24,9 +24,9 @@ class IMGUIConan(ConanFile):
             del self.options.fPIC
 
     def source(self):
-        tools.get("{0}/archive/v{1}.tar.gz".format(self.homepage, self.version))
-        extracted_dir = self.name + "-" + self.version
-        os.rename(extracted_dir, self._source_subfolder)
+        git = tools.Git(folder=self._source_subfolder)
+        git.clone("https://github.com/ocornut/imgui.git", "master", shallow=True)
+        git.checkout("c077dd4872f435dd959feb024e5a9adb2c7df20c")
 
     def _configure_cmake(self):
         cmake = CMake(self)
