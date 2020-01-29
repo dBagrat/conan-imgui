@@ -3,7 +3,7 @@ from conans import ConanFile, CMake, tools
 
 class IMGUIConan(ConanFile):
     name = "imgui"
-    version = "1.73"
+    version = "1.74"
     license = "MIT"
     url = "https://github.com/dbagrat/conan-imgui"
     homepage = "https://github.com/ocornut/imgui"
@@ -22,6 +22,9 @@ class IMGUIConan(ConanFile):
     def config_options(self):
         if self.settings.os == 'Windows':
             del self.options.fPIC
+
+    def package_id(self):
+        self.info.vs_toolset_incompatible()
 
     def source(self):
         tools.get("{0}/archive/v{1}.tar.gz".format(self.homepage, self.version))
